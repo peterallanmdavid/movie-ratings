@@ -2,11 +2,6 @@
 module.exports = {
   apps: [
     {
-      name: "api",
-      script: "cd api && npm run dev",
-      watch: true,
-    },
-    {
       name: "scraper",
       script: "cd api && npm run start-scraper",
       cron_restart: "0 0 * * *", // This cron expression runs the script every day,
@@ -15,6 +10,12 @@ module.exports = {
       watch: true,
       autorestart: false,
     },
+    {
+      name: "api",
+      script: "cd api && npm run dev",
+      watch: true,
+    },
+
     {
       name: "web",
       script: "cd web && npm run start",
