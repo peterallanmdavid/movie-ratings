@@ -50,16 +50,15 @@ const MoviesAccordion: React.FC = () => {
           </div>
           {movie.id && openMovies.includes(movie.id) && (
             <div className="mt-10">
-              <div className="flex flex-row gap-5">
+              <div className=" grid grid-rows-2 md:flex flex-row gap-5">
                 <img
                   src={movie.sourceData?.[0]?.data?.url}
                   alt={`${movie.name} poster`}
+                  className="shadow rounded"
                 />
                 <div className="flex flex-col gap-2">
-                  <p className="flex flex-1  gap-2">
-                    <span className="text-lg">
-                      {movie.sourceData?.[0]?.data?.plot}
-                    </span>
+                  <p className="flex flex-none md:flex-1 gap-2 text-lg text-gray-900">
+                    {movie.sourceData?.[0]?.data?.plot}
                   </p>
 
                   <div className="flex flex-col">
