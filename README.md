@@ -1,4 +1,4 @@
-## Installtion
+## Installation
 
 ```bash
 cd api && npm install
