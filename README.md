@@ -2,6 +2,7 @@
 
 ```bash
 npm run setup
+npm run start:scraper
 ```
 
 ## Running the APP

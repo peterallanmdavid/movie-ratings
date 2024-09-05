@@ -8,6 +8,8 @@ npm-shrinkwrap.json
 .nyc_output
 coverage
 
+src/db/movieRatings.json
+
 # Benchmarking
 benchmarks/graphs
 
