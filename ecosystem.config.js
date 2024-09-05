@@ -3,7 +3,7 @@ module.exports = {
   apps: [
     {
       name: "api",
-      script: "cd api && npm run start",
+      script: "cd api && npm run dev",
       watch: true,
     },
     {

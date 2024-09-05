@@ -1,25 +1,19 @@
 import React, { useEffect, useState } from "react";
-import { fetchMovies } from "../utils/api";
-
-interface Rating {
-  id: number;
-  rating: number;
-  date: string;
-  source: string;
-}
-
-interface Movie {
-  id: number;
-  name: string;
-  image_url: string;
-  description: string;
-  year: number;
-  ratings: Rating[];
-}
+import { fetchMovies, MovieList } from "../utils/api";
 
 const MoviesAccordion: React.FC = () => {
-  const [movies, setMovies] = useState<Movie[]>([]);
+  const [movies, setMovies] = useState<MovieList>([]);
   const [error, setError] = useState<string | null>(null);
+
+  const [openMovies, setOpenMovies] = useState<string[]>([]); // Track opened movies by ID
+
+  const toggleAccordion = (id: string) => {
+    if (openMovies.includes(id)) {
+      setOpenMovies(openMovies.filter((movieId) => movieId !== id));
+    } else {
+      setOpenMovies([...openMovies, id]);
+    }
+  };
 
   useEffect(() => {
     const getMovies = async () => {
@@ -40,28 +34,51 @@ const MoviesAccordion: React.FC = () => {
 
   return (
     <div>
-      {movies.map((movie) => (
-        <details key={movie.id}>
-          <summary>
-            {movie.name} ({movie.year})
-          </summary>
-          <div>
-            <img
-              src={movie.image_url}
-              alt={movie.name}
-              style={{ width: "200px" }}
-            />
-            <p>{movie.description}</p>
-            <h4>Ratings:</h4>
-            <ul>
-              {movie.ratings.map((rating) => (
-                <li key={rating.id}>
-                  {rating.source}: {rating.rating}% (on {rating.date})
-                </li>
-              ))}
-            </ul>
+      {movies.map((movie, index) => (
+        <div
+          key={movie.id}
+          className="overflow-hidden bg-white shadow sm:rounded-lg mb-10 p-4"
+        >
+          <div
+            onClick={() => toggleAccordion(movie.id)}
+            className="flex flex-row"
+          >
+            <h1 className="text-xl font-bold cursor-pointer capitalize flex-1">
+              {movie.name} ({movie.year})
+            </h1>
+            <div>{movie.id && openMovies.includes(movie.id) ? "-" : "+"}</div>
           </div>
-        </details>
+          {movie.id && openMovies.includes(movie.id) && (
+            <div className="mt-10">
+              <div className="flex flex-row gap-5">
+                <img
+                  src={movie.sourceData?.[0]?.data?.url}
+                  alt={`${movie.name} poster`}
+                />
+                <div className="flex flex-col gap-2">
+                  <p className="flex flex-1  gap-2">
+                    <span className="text-lg">
+                      {movie.sourceData?.[0]?.data?.plot}
+                    </span>
+                  </p>
+
+                  <div className="flex flex-col">
+                    {movie.sourceData.map((source, sourceIndex) => (
+                      <div key={sourceIndex} className="flex flex-1 capitalize">
+                        <p>
+                          <strong>{source.name}:</strong>
+                          <span className="text-3xl ml-5 font-bold text-green-800">
+                            {Math.floor(source.data.rating)}
+                          </span>
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
       ))}
     </div>
   );

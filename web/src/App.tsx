@@ -3,8 +3,8 @@ import MoviesAccordion from "./components/MovieAccordion";
 
 const App: React.FC = () => {
   return (
-    <div className="App">
-      <h1>Movies</h1>
+    <div className="m-5">
+      <h1 className="text-3xl font-bold mb-5">Movies</h1>
       <MoviesAccordion />
     </div>
   );
