@@ -5,9 +5,10 @@
   "main": "index.js",
   "scripts": {
     "setup": "npm install && cd api && npm install && cd ../web && npm install",
+    "start:scraper": "cd api && npm run start-scraper",
     "start-web": "cd web && npm start",
     "start-api": "cd api && npm start",
-    "start": "pm2 start ecosystem.config.js && pm2 monit",
+    "start": "pm2 start ecosystem.config.js && pm2 monit && npm run stop",
     "stop": "pm2 stop ecosystem.config.js"
   },
   "author": "",
